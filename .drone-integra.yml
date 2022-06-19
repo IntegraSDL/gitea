@@ -25,6 +25,30 @@ steps:
     commands:
       - make deps-frontend
 
+  - name: checks-frontend
+    image: node:16
+    commands:
+      - make checks-frontend
+    depends_on: [deps-frontend]
+
+  - name: lint-frontend
+    image: node:16
+    commands:
+      - make lint-frontend
+    depends_on: [deps-frontend]
+
+  - name: test-frontend
+    image: node:16
+    commands:
+      - make test-frontend
+    depends_on: [lint-frontend]
+
+  - name: build-frontend
+    image: node:16
+    commands:
+      - make frontend
+    depends_on: [test-frontend]
+
   - name: deps-backend
     image: golang:1.18
     pull: always
@@ -34,12 +58,6 @@ steps:
       - name: deps
         path: /go
     depends_on: [build-frontend]
-
-  - name: lint-frontend
-    image: node:16
-    commands:
-      - make lint-frontend
-    depends_on: [deps-frontend]
 
   - name: lint-backend
     image: gitea/test_env:linux-amd64  # https://gitea.com/gitea/test-env
@@ -83,12 +101,6 @@ steps:
       - name: deps
         path: /go
 
-  - name: checks-frontend
-    image: node:16
-    commands:
-      - make checks-frontend
-    depends_on: [deps-frontend]
-
   - name: checks-backend
     image: golang:1.18
     commands:
@@ -97,18 +109,6 @@ steps:
     volumes:
       - name: deps
         path: /go
-
-  - name: test-frontend
-    image: node:16
-    commands:
-      - make test-frontend
-    depends_on: [lint-frontend]
-
-  - name: build-frontend
-    image: node:16
-    commands:
-      - make frontend
-    depends_on: [test-frontend]
 
   - name: build-backend-no-gcc
     image: golang:1.18 # this step is kept as the lowest version of golang that we support
