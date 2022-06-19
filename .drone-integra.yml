@@ -33,7 +33,7 @@ steps:
     volumes:
       - name: deps
         path: /go
-    depends_on: [deps-frontend]
+    depends_on: [build-frontend]
 
   - name: lint-frontend
     image: node:16
