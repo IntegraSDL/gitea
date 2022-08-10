@@ -227,8 +227,10 @@ func TestGiteaUploadRemapExternalUser(t *testing.T) {
 }
 
 func TestGiteaUploadUpdateGitForPullRequest(t *testing.T) {
-	//FIXME. Integra
+	// FIXME: Since no repository while local build, just skip
+
 	t.Skip()
+
 	unittest.PrepareTestEnv(t)
 
 	//
