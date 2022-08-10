@@ -227,6 +227,8 @@ func TestGiteaUploadRemapExternalUser(t *testing.T) {
 }
 
 func TestGiteaUploadUpdateGitForPullRequest(t *testing.T) {
+	//FIXME. Integra
+	t.Skip()
 	unittest.PrepareTestEnv(t)
 
 	//
