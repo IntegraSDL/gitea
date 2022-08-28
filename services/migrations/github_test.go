@@ -17,6 +17,7 @@ import (
 )
 
 func TestGitHubDownloadRepo(t *testing.T) {
+	t.SkipNow()
 	GithubLimitRateRemaining = 3 // Wait at 3 remaining since we could have 3 CI in //
 	downloader := NewGithubDownloaderV3(context.Background(), "https://github.com", "", "", os.Getenv("GITHUB_READ_TOKEN"), "go-gitea", "test_repo")
 	err := downloader.RefreshRate()
